@@ -4,7 +4,7 @@ from django.shortcuts import render
 import requests
 
 def index(request):
-    api_key = 'Api_key'
+    api_key = 'API KEY'
     current_weather_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
 
     #forecast_url = 'https://api.openweathermap.org/data/2.5/forecast/daily?lat={}&lon={}&cnt={}&appid={}'
@@ -13,22 +13,22 @@ def index(request):
     forecast_url = 'https://api.openweathermap.org/data/2.5/forecast?lat={}&lon={}&appid={}'
 
     if request.method == 'POST':
-        city1 = request.POST['city1']
+        city1 = request.POST.get('city1', None)
         city2 = request.POST.get('city2', None)
 
         #weather_data1, daily_forecasts1 = fetch_weather_and_forecast(city1, api_key, current_weather_url, forecast_url)
-        
-        weather_data1 = fetch_weather_and_forecast(city1, api_key, current_weather_url, forecast_url)
+
+        if city1:
+            weather_data1 = fetch_weather_and_forecast(city1, api_key, current_weather_url, forecast_url)
+        else:
+            weather_data1 = None
 
 
-        if city2 :
+        if city2:
             #weather_data2, daily_forecasts2 = fetch_weather_and_forecast(city2, api_key, current_weather_url, forecast_url)
-            
             weather_data2 = fetch_weather_and_forecast(city2, api_key, current_weather_url, forecast_url)
-
         else:
             #weather_data2, daily_forecasts2 = None, None
-            
             weather_data2 = None,
 
 
